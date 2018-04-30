@@ -1,0 +1,26 @@
+{
+  "name": "roborally",
+  "version": "1.0.0",
+  "description": "",
+  "main": "roboRally.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markcronin/RoboRally.git"
+  },
+  "keywords": [
+    "game",
+    "roborally"
+  ],
+  "author": "Mark Cronin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markcronin/RoboRally/issues"
+  },
+  "homepage": "https://github.com/markcronin/RoboRally#readme",
+  "dependencies": {
+    "lodash": "^4.17.10"
+  }
+}
