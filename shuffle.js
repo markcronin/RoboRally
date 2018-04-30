@@ -6,9 +6,10 @@ const deck = [
   "r", "r", "r", "r", "r", "r", "r", "r", "r",
   "r", "r", "r", "r", "r", "r", "r", "r", "r",
   "u", "u", "u", "u", "u", "u",
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-  3, 3, 3, 3, 3, 3,
+  "1", "1", "1", "1", "1", "1", "1", "1", "1",
+  "1", "1", "1", "1", "1", "1", "1", "1", "1",
+  "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",
+  "3", "3", "3", "3", "3", "3",
   "b", "b", "b", "b", "b", "b"
 ];
 
@@ -17,9 +18,7 @@ const deck = [
 
 const shuffledDeck = _.shuffle(deck);
 
-const playerDamage = [9, 9, 9, 9, 8, 7, 6, 5]
-
-console.log (9 - playerDamage[7])
+const playerDamage = [9, 9, 9, 9, 8, 7, 6, 5]; // amount of cards to be dealt
 
 function dealCards(deck, numPlayers, damage) {
   const players = ["", "", "", "", "", "", "", ""];
