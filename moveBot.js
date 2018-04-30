@@ -3,7 +3,7 @@ const testBoard = require("./testBoard")
 
 const squashBot = {
   name: 'Squash Bot',
-  position: [3, 0],     // [x, y]
+  position: [0, 0],     // [x, y]
   orientation: 'east',
   alive: true
 };
@@ -47,15 +47,16 @@ function moveRobotOneStep(robot, move, board) {
           } else {
             newBot.position[0] -= moveKey2[move];
           }
-          // checks to see if the new destination square is a position
-          // kills the bot and breaks the current loop
-          let currentSqaure = testBoard[newBot.position[1]][newBot.position[0]]
+          // checks to see if the new destination square is a pit
+          // kills the bot and breaks the current loop if true
+          let currentSqaure = testBoard[ newBot.position[1] ][ newBot.position[0] ]
           if (currentSqaure.type === "pit") {
             newBot.alive = false;
             console.log ("you died");
             break;
           } else {
             // logs each sqaure the bot encounrters as it travels
+            // for testing purposes 
             console.log (newBot.position);
           }
         }
