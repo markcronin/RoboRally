@@ -5,4 +5,6 @@ function manhattenDistance(botCoord, targetCoord) {
   return (Math.abs(botCoord[0] - targetCoord[0])) + (Math.abs(botCoord[1] - targetCoord[1]))
 }
 
-console.log(manhattenDistance(botPos,targetPos));
+// console.log(manhattenDistance(botPos,targetPos));
+
+module.exports = manhattenDistance;
