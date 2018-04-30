@@ -15,7 +15,7 @@ const testBoard = [
     {position: [5,1], type: "floor",  north: false,  east: true,   south: false, west: false}
   ], [
     {position: [0,2], type: "floor",  north: false,  east: false,  south: false, west: true},
-    {position: [2,2], type: "floor",  north: false,  east: true,   south: false, west: false},
+    {position: [1,2], type: "floor",  north: false,  east: true,   south: false, west: false},
     {position: [2,2], type: "floor",  north: true,   east: false,  south: false, west: true},
     {position: [3,2], type: "floor",  north: true,   east: false,  south: false, west: false},
     {position: [4,2], type: "floor",  north: false,  east: false,  south: false, west: false},
@@ -48,7 +48,7 @@ const _ = require("lodash");
 
 const squashBot = {
   name: 'Squash Bot',
-  position: [4, 0],     // [x, y]
+  position: [3, 0],     // [x, y]
   orientation: 'east',
   alive: true
 };
@@ -73,10 +73,10 @@ function moveRobotOneStep(robot, move, board) {
         let y = _.indexOf(directions, newBot.orientation) + moveKey2[move];
         newBot.orientation = directions[y % 4];
       } else {
-        // checks to see if there is a wall blocking the wall
+        // checks to see if there is a wall blocking the way
         // breaks the loop before moving the bot if there is
         let currentOrientation = newBot.orientation
-        let currentSqaure = testBoard[newBot.position[0]][newBot.position[1]]
+        let currentSqaure = testBoard[ newBot.position[1] ][ newBot.position[0] ]
         if (currentSqaure[currentOrientation] === true){
           console.log ("you bumped into a wall");
           break;
@@ -112,4 +112,4 @@ function moveRobotOneStep(robot, move, board) {
 
 console.log (squashBot)
 //console.log (moveRobotOneStep(squashBot, "l", testBoard))
-console.log (moveRobotOneStep(squashBot, 1, testBoard))
+console.log (moveRobotOneStep(squashBot, 3, testBoard))
