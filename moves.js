@@ -15,8 +15,10 @@ function makeMoves(avail) {
     }
   }
   makeMovesRecursive(avail, "");
-  console.log(_.uniq(outputArr).length + " unique combinations");
+//  console.log(_.uniq(outputArr).length + " unique combinations");
   return _.uniq(outputArr);
 }
 
-makeMoves("111222345");
+// makeMoves("111222345");
+
+module.exports = makeMoves;

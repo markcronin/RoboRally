@@ -56,7 +56,7 @@ function moveRobotOneStep(robot, move, board) {
             break;
           } else {
             // logs each sqaure the bot encounrters as it travels
-            // for testing purposes 
+            // for testing purposes
             console.log (newBot.position);
           }
         }
@@ -66,6 +66,8 @@ function moveRobotOneStep(robot, move, board) {
   return newBot;
 }
 
-console.log (squashBot)
+//console.log (squashBot)
 //console.log (moveRobotOneStep(squashBot, "l", testBoard))
-console.log (moveRobotOneStep(squashBot, 3, testBoard))
+//console.log (moveRobotOneStep(squashBot, 3, testBoard))
+
+module.exports = moveRobotOneStep;

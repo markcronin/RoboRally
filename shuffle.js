@@ -1,20 +1,8 @@
 const _ = require("lodash");
+const deck = require("./deck")
 
-const deck = [
-  "l", "l", "l", "l", "l", "l", "l", "l", "l",
-  "l", "l", "l", "l", "l", "l", "l", "l", "l",
-  "r", "r", "r", "r", "r", "r", "r", "r", "r",
-  "r", "r", "r", "r", "r", "r", "r", "r", "r",
-  "u", "u", "u", "u", "u", "u",
-  "1", "1", "1", "1", "1", "1", "1", "1", "1",
-  "1", "1", "1", "1", "1", "1", "1", "1", "1",
-  "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",
-  "3", "3", "3", "3", "3", "3",
-  "b", "b", "b", "b", "b", "b"
-];
 
 // Cards in deck (left 18, right 18, uturn 6, move1: 18, move2: 12, move3: 6, back1: 6)
-
 
 const shuffledDeck = _.shuffle(deck);
 
@@ -31,11 +19,11 @@ function dealCards(deck, numPlayers, damage) {
      } else {
        continue;
      }
-     }
    }
-   return players
+ }
+ return players
 }
 
-console.log (dealCards(shuffledDeck, 8, playerDamage));
+// console.log (dealCards(shuffledDeck, 8, playerDamage));
 
 module.exports = dealCards;
