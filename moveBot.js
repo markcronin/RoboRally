@@ -13,7 +13,7 @@ function moveRobotOneStep(robot, move, board) {
   let newBot = _.cloneDeep(robot);
   const directions = ['north', 'east', 'south', 'west'];
   const moveKey =  {b: -1, 1: 1, 2: 2, 3: 3, l: -1, r: 1, u: 2};
-  const moveKey2 = {b: -1, 1: 1, 1: 1, 3: 1, l: -1, r: 1, u: 1};
+  const moveKey2 = {b: -1, 1: 1, 2: 1, 3: 1, l: -1, r: 1, u: 1};
   // checks to see if the bot is still alive
   if (newBot.alive === false) {
     console.log ("you are dead");
@@ -26,13 +26,13 @@ function moveRobotOneStep(robot, move, board) {
       // "u" handles 180 degree U-turns
       if ( move === "l" || move === "r" || move === "u") {
         let y = _.indexOf(directions, newBot.orientation) + moveKey2[move];
-        newBot.orientation = directions[y % 4];
+        newBot.orientation = directions[(y + 4) % 4];
       } else {
         // checks to see if there is a wall blocking the way
         // breaks the loop before moving the bot if there is
         let currentOrientation = newBot.orientation
-        let currentSqaure = testBoard[ newBot.position[1] ][ newBot.position[0] ]
-        if (currentSqaure[currentOrientation] === true){
+        let currentSquare = testBoard[ newBot.position[1] ][ newBot.position[0] ]
+        if (currentSquare[currentOrientation] === true){
           console.log ("you bumped into a wall");
           break;
         } else {
@@ -49,8 +49,8 @@ function moveRobotOneStep(robot, move, board) {
           }
           // checks to see if the new destination square is a pit
           // kills the bot and breaks the current loop if true
-          let currentSqaure = testBoard[ newBot.position[1] ][ newBot.position[0] ]
-          if (currentSqaure.type === "pit") {
+          let currentSquare = testBoard[ newBot.position[1] ][ newBot.position[0] ]
+          if (currentSquare.type === "pit") {
             newBot.alive = false;
             console.log ("you died");
             break;

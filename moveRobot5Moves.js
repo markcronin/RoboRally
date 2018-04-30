@@ -17,38 +17,20 @@ const shuffledDeck = _.shuffle(deck);
 
 const cardsAvailable = dealCards(shuffledDeck, 1, playerDamage)[0]
 //const cardsAvailable = "22l23rr2u"
-
 console.log (cardsAvailable)
 
 const movesTable = makeMoves(cardsAvailable)
-
 console.log (movesTable.length)
 
-const testInput = "1r2l3"
+const testInput = "23rl1"
 
 function fiveSteps(robot, cards, board) {
   let newBot = _.cloneDeep(robot);
-  for ( x = 1; x < 5; x++) {
-    let newBot = moveRobotOneStep(robot, cards[x], board);
+  for ( x = 0; x < 5; x++) {
+    newBot = moveRobotOneStep(newBot, cards[x], board);
     console.log (newBot)
   }
+  return newBot;
 }
 
 console.log (fiveSteps(squashBot, testInput, testBoard))
-
-/*
-
-function fiveSteps(movesTable, robot, board) {
-  let output = [];
-  let newBot = _.cloneDeep(robot);
-  for ( x = 0; x < movesTable.length; x++) {
-    for ( y = 0; y < 5; y++) {
-      newBot = moveRobotOneStep(newBot, movesTable[0][y], board)
-    }
-    output.push(newBot)
-  }
-}
-
-const foo = fiveSteps(movesTable, squashBot, testBoard)
-
-*/
