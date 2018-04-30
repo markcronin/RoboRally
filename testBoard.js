@@ -35,7 +35,7 @@ const testBoard = [
     {position: [4,4], type: "floor",  north: true,   east: false,  south: false, west: true},
     {position: [5,4], type: "floor",  north: false,  east: true,   south: false, west: false}
   ], [
-    {position: [0,5], type: "pit",    north: false,  east: false,  south: true, west: true},
+    {position: [0,5], type: "floor",    north: false,  east: false,  south: true, west: true},
     {position: [1,5], type: "floor",  north: false,  east: false,  south: true, west: false},
     {position: [2,5], type: "floor",  north: false,  east: false,  south: true, west: false},
     {position: [3,5], type: "floor",  north: false,  east: false,  south: true, west: false},
@@ -94,7 +94,7 @@ function moveRobotOneStep(robot, move, board) {
           }
           // checks to see if the new destination square is a position
           // kills the bot and breaks the current loop
-          let currentSqaure = testBoard[newBot.position[0]][newBot.position[1]]
+          let currentSqaure = testBoard[newBot.position[1]][newBot.position[0]]
           if (currentSqaure.type === "pit") {
             newBot.alive = false;
             console.log ("you died");
