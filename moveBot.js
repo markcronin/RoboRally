@@ -5,6 +5,8 @@ const squashBot = {
   name: 'Squash Bot',
   position: [0, 0],     // [x, y]
   orientation: 'east',
+  flags: [false, false, false, false],
+  damage: 0,
   alive: true
 };
 
