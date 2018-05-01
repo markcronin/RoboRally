@@ -1,5 +1,8 @@
 const _ = require("lodash");
 
+
+// takes a string of 9 characters and returns all
+// possible unique combintions of 5 characters
 function makeMoves(avail) {
   let outputArr = [];
   function makeMovesRecursive(avail, moves) {
@@ -19,6 +22,6 @@ function makeMoves(avail) {
   return _.uniq(outputArr);
 }
 
-// makeMoves("111222345");
+ //makeMoves("123456789");
 
 module.exports = makeMoves;
