@@ -1,15 +1,7 @@
 const _ = require("lodash");
 const testBoard = require("./testBoard")
 const helpers = require("./utils/moveBotHelpers");
-
-const squashBot = {
-  name: 'Squash Bot',
-  position: [0, 0],     // [x, y]
-  orientation: 'east',
-  flags: [false, false, false, false],
-  damage: 0,
-  alive: true
-};
+const squashBot = require("./robot")
 
 function moveRobotOneStep(robot, move, board) {
   let newBot = _.cloneDeep(robot);
@@ -33,7 +25,7 @@ function moveRobotOneStep(robot, move, board) {
   return newBot;
 }
 
-console.log (squashBot)
+//console.log (squashBot)
 //console.log (moveRobotOneStep(squashBot, "l", testBoard))
 console.log (moveRobotOneStep(squashBot, 3, testBoard))
 

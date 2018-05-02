@@ -4,13 +4,8 @@ const testBoard = require("./testBoard");
 const dealCards = require("./shuffle");
 const deck = require("./deck");
 const makeMoves = require("./moves");
+const squashBot = require("./robot")
 
-const squashBot = {
-  name: 'Squash Bot',
-  position: [0, 0],     // [x, y]
-  orientation: 'east',
-  alive: true
-};
 
 const playerDamage = [9, 9, 9, 9, 8, 7, 6, 5]; // amount of cards to be dealt
 const shuffledDeck = _.shuffle(deck);
