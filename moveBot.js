@@ -5,10 +5,6 @@ const squashBot = require("./robot")
 
 function moveRobotOneStep(robot, move, board) {
   let newBot = _.cloneDeep(robot);
-  if (newBot.alive === false) {
-    console.log ("you are dead");
-    return newBot;
-  }
   for (let x = Math.abs(helpers.moveKey[move]); x > 0; x--) {
     if ( move === "l" || move === "r" || move === "u") {
       helpers.changeOrientation (newBot, move);
@@ -27,6 +23,6 @@ function moveRobotOneStep(robot, move, board) {
 
 //console.log (squashBot)
 //console.log (moveRobotOneStep(squashBot, "l", testBoard))
-console.log (moveRobotOneStep(squashBot, 3, testBoard))
+//console.log (moveRobotOneStep(squashBot, 3, testBoard))
 
 module.exports = moveRobotOneStep;

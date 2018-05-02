@@ -1,57 +1,75 @@
 const _ = require("lodash");
-//const moveRobotOneStep = require("./moveBot");
-//const moveRobot5Moves = require("./moveRobot5Moves")
 const testBoard = require("./testBoard");
 const squashBot = require("./robot");
 
-const directions = ['north', 'east', 'south', 'west'];
-
-const robot = {
-  name: 'Squash Bot',
-  position: [3, 1],     // [x, y]
-  orientation: 'east',
-  flags: {flag1: false, flag2: false},
-  detect: {lasers: true, turners: true, conveyors: true},
-  distToNextFlag: 100,
-  damage: 5,
-  alive: true
-};
-
-
-function encounterExpressConveyors(robot, board) {
-  let newBot = _.cloneDeep(robot);
-  let boardPosition = board[ newBot.position[1] ][ newBot.position[0] ];
-  let orientationIndex = _.indexOf(directions, newBot.orientation) + boardPosition.turner;
-  newBot.orientation = directions[(orientationIndex + 4) % 4];
-  newBot.position = [newBot.position[0] + boardPosition.expressConveyor[0], newBot.position[1] + boardPosition.expressConveyor[1]];
-  return newBot;
-}
-
-
-function encounterConveyors(robot, board) {
-  let newBot = _.cloneDeep(robot);
-  let boardPosition = board[ newBot.position[1] ][ newBot.position[0] ];
-  let orientationIndex = _.indexOf(directions, newBot.orientation) + boardPosition.turner;
-  newBot.orientation = directions[(orientationIndex + 4) % 4];
-  newBot.position = [newBot.position[0] + boardPosition.conveyor[0], newBot.position[1] + boardPosition.conveyor[1]];
-  return newBot;
-}
-
-
+//handles left and right turners, also rotates bots on converyor belt corners
 function encounterTurners(robot, board) {
-  let newBot = _.cloneDeep(robot);
-  let boardPosition = board[ newBot.position[1] ][ newBot.position[0] ];
-  let orientationIndex = _.indexOf(directions, newBot.orientation) + boardPosition.turner;
-  newBot.orientation = directions[(orientationIndex + 4) % 4];
-  return newBot;
+  const directions = ['north', 'east', 'south', 'west'];
+  let boardPosition = board[ robot.position[1]][ robot.position[0]];
+  let orientationIndex = _.indexOf(directions, robot.orientation) + boardPosition.turner;
+  robot.orientation = directions[(orientationIndex + 4) % 4];
+  return robot;
 }
 
+// moves bots along bot regular and express belts
+// based on hard coded sting input (see function encounterBoard)
+function encounterConveyors(robot, board, conveyorType) {
+  let boardPosition = board[ robot.position[1]][ robot.position[0]];
+  encounterTurners(robot, board);
+  robot.position = [robot.position[0] + boardPosition[conveyorType][0], robot.position[1] + boardPosition[conveyorType][1]];
+  return robot;
+}
 
-function encounterWrench(robot, board) {
-  let newBot = _.cloneDeep(robot);
-  let boardPosition = board[ robot.position[1] ][ robot.position[0] ];
-  if (boardPosition.wrench === true) {
-    newBot.damage = newBot.damage - 1;
+function encounterLasers(robot, board) {
+  let boardPosition = board[ robot.position[1]][ robot.position[0]];
+  if (boardPosition.lasers === true) {
+    robot.damage = robot.damage +1;
   }
+  return robot;
+}
+
+function checkFlag(robot, board) {
+  let boardPosition = board[ robot.position[1]][ robot.position[0]];
+  if (robot.flags.flag1 === true){
+    robot.distToNextFlag = boardPosition.flag2;
+    if (robot.distToNextFlag === 0){
+      robot.flags.flag2 = true;
+    }
+  } else {
+    robot.distToNextFlag = boardPosition.flag1;
+  }
+  if (robot.distToNextFlag === 0) {
+    robot.flags.flag1 = true;
+  }
+  return robot;
+}
+
+function checkPit(robot, board) {
+  let boardPosition = board[ robot.position[1]][ robot.position[0]];
+  if (boardPosition.type === "pit") {
+    robot.alive = false;
+  }
+  //returns true if the robot dies
+  return !robot.alive;
+}
+
+function encounterBoard(robot, board) {
+  let newBot = _.cloneDeep(robot);
+  if (robot.detect.conveyors === true && robot.errorMargin < Math.random()) {
+    newbot = encounterConveyors(newBot, board, "expressConveyor");
+    newbot = encounterConveyors(newBot, board, "conveyor");
+  }
+  if (checkPit(newBot, board) === true) {
+    return newBot;
+  }
+  if (robot.detect.turners === true && robot.errorMargin < Math.random()) {
+    newbot = encounterTurners(newBot, board);
+  }
+  if (robot.detect.lasers === true && robot.errorMargin < Math.random()) {
+  newBot = encounterLasers(newBot, board);
+  }
+  newBot = checkFlag(newBot, board)
   return newBot;
 }
+
+module.exports = encounterBoard;
