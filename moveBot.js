@@ -23,6 +23,6 @@ function moveRobotOneStep(robot, move, board) {
 
 //console.log (squashBot)
 //console.log (moveRobotOneStep(squashBot, "l", testBoard))
-//console.log (moveRobotOneStep(squashBot, 3, testBoard))
+//console.log (moveRobotOneStep(squashBot, 1, testBoard))
 
 module.exports = moveRobotOneStep;

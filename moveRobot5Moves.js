@@ -13,7 +13,7 @@ function encounterWrench(robot, board) {
   return newBot;
 }
 
-const testInput = "111r1"
+//const testInput = "111r1"
 
 function fiveSteps(robot, cards, board) {
   let newBot = _.cloneDeep(robot);
@@ -28,6 +28,6 @@ function fiveSteps(robot, cards, board) {
   return encounterWrench(newBot, board);
 }
 
-console.log (fiveSteps(squashBot, testInput, testBoard))
+//console.log (fiveSteps(squashBot, testInput, testBoard))
 
 module.exports = fiveSteps;

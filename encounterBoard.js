@@ -20,6 +20,8 @@ function encounterConveyors(robot, board, conveyorType) {
   return robot;
 }
 
+
+// checks for lasers and adds +1 damage if needed
 function encounterLasers(robot, board) {
   let boardPosition = board[ robot.position[1]][ robot.position[0]];
   if (boardPosition.lasers === true) {
@@ -28,6 +30,8 @@ function encounterLasers(robot, board) {
   return robot;
 }
 
+
+// checks whether the bot ever crosses the flag square
 function checkFlag(robot, board) {
   let boardPosition = board[ robot.position[1]][ robot.position[0]];
   if (robot.flags.flag1 === true){
@@ -44,6 +48,9 @@ function checkFlag(robot, board) {
   return robot;
 }
 
+
+// checks to see if the conveyors push the bot into a position
+// kills the bot if true
 function checkPit(robot, board) {
   let boardPosition = board[ robot.position[1]][ robot.position[0]];
   if (boardPosition.type === "pit") {
