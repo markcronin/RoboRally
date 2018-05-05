@@ -11,11 +11,19 @@ function encounterTurners(robot, board) {
   return robot;
 }
 
+function beltTurners(robot, board) {
+  const directions = ['north', 'east', 'south', 'west'];
+  let boardPosition = board[ robot.position[1]][ robot.position[0]];
+  let orientationIndex = _.indexOf(directions, robot.orientation) + boardPosition.beltCorner;
+  robot.orientation = directions[(orientationIndex + 4) % 4];
+  return robot;
+}
+
 // moves bots along bot regular and express belts
 // based on hard coded sting input (see function encounterBoard)
 function encounterConveyors(robot, board, conveyorType) {
   let boardPosition = board[ robot.position[1]][ robot.position[0]];
-  encounterTurners(robot, board);
+  beltTurners(robot, board);
   robot.position = [robot.position[0] + boardPosition[conveyorType][0], robot.position[1] + boardPosition[conveyorType][1]];
   return robot;
 }
@@ -33,6 +41,43 @@ function encounterLasers(robot, board) {
 
 // checks whether the bot ever crosses the flag square
 function checkFlag(robot, board) {
+ let boardPosition = board[ robot.position[1]][ robot.position[0]];
+ let flagsCrossed = _.indexOf(robot.flags, false);
+ if (flagsCrossed === 3) {
+   robot.distToNextFlag = boardPosition.flag4;
+   if (robot.distToNextFlag === 0){
+     robot.flags[flagsCrossed] = true;
+   }
+ }
+ if (flagsCrossed === 2) {
+   robot.distToNextFlag = boardPosition.flag3;
+   if (robot.distToNextFlag === 0){
+     robot.flags[flagsCrossed] = true;
+     robot.distToNextFlag = boardPosition.flag4;
+   }
+ }
+ if (flagsCrossed === 1) {
+   robot.distToNextFlag = boardPosition.flag2;
+   if (robot.distToNextFlag === 0){
+     robot.flags[flagsCrossed] = true;
+     robot.distToNextFlag = boardPosition.flag3;
+   }
+ }
+ if (flagsCrossed === 0) {
+   robot.distToNextFlag = boardPosition.flag1;
+   if (robot.distToNextFlag === 0){
+     robot.flags[flagsCrossed] = true;
+     robot.distToNextFlag = boardPosition.flag2;
+   }
+ }
+ return robot;
+}
+
+
+// old check flags version
+/*
+
+function checkFlag(robot, board) {
   let boardPosition = board[ robot.position[1]][ robot.position[0]];
   if (robot.flags.flag1 === true){
     robot.distToNextFlag = boardPosition.flag2;
@@ -48,6 +93,7 @@ function checkFlag(robot, board) {
   return robot;
 }
 
+*/
 
 // checks to see if the conveyors push the bot into a position
 // kills the bot if true

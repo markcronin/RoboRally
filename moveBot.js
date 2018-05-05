@@ -10,7 +10,7 @@ function moveRobotOneStep(robot, move, board) {
       helpers.changeOrientation (newBot, move);
       continue;
     }
-    if (helpers.blockedByWall (newBot, board)) {
+    if (helpers.blockedByWall (newBot, board, move)) {
       break;
     }
     helpers.changePosition(newBot, move);
