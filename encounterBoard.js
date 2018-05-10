@@ -106,6 +106,15 @@ function checkPit(robot, board) {
   return !robot.alive;
 }
 
+function encounterWrench(robot, board) {
+   let newBot = _.cloneDeep(robot);
+   let boardPosition = board[ robot.position[1] ][ robot.position[0] ];
+   if (boardPosition.wrench === true && robot.damage > 0) {
+     newBot.damage = newBot.damage - 1;
+   }
+   return newBot;
+ }
+
 function encounterBoard(robot, board) {
   let newBot = _.cloneDeep(robot);
   if (robot.detect.conveyors === true && robot.errorMargin < Math.random()) {
@@ -121,8 +130,10 @@ function encounterBoard(robot, board) {
   if (robot.detect.lasers === true && robot.errorMargin < Math.random()) {
   newBot = encounterLasers(newBot, board);
   }
+  newBot = encounterWrench(newBot, board);
   newBot = checkFlag(newBot, board)
   return newBot;
+
 }
 
 module.exports = encounterBoard;

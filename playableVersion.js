@@ -1,7 +1,10 @@
 const _ = require("lodash");
-const testBoard = require("./roboRallyBoard");
+const testBoard = require("./RoboRallyBoard4");
 const helpers = require("./utils/moveBotHelpers");
-const encounterBoard = require("./encounterBoard")
+const encounterBoard = require("./encounterBoard");
+const deck = require("./deck");
+const dealCards = require("./shuffle")
+const playerDamage = [9, 9, 9, 9, 9, 9, 9, 9];
 
 // takes a string of 9 characters and returns all
 // possible unique combintions of 5 characters
@@ -26,19 +29,25 @@ function makeMoves(avail, lockedCards) {
   return _.uniq(outputArr);
 }
 
-let inputArr = makeMoves("11223rlrl", "");
+let shuffle = _.shuffle(deck);
+let cards = dealCards(shuffle, 1, playerDamage);
 
-const robot = { name: 'Squash Bot',
-  position: [ 8, 4 ],
-  orientation: 'west',
-  flags: [ true, false, false, false ],
-  detect: { lasers: true, turners: true, conveyors: true },
-  errorMargin: 0,
-  distToNextFlag: 11,
-  damage: -1,
-  damageThreshold: 3,
-  alive: true,
-  inputLog: '11223' };
+let inputArr = makeMoves("11123uulr", "");
+//let inputArr = makeMoves(cards[0], "");
+
+const robot = {
+  name: 'Squash Bot',
+    position: [ 9, 11 ],
+    orientation: 'south',
+    flags: [ true, true, true, false ],
+    detect: { lasers: true, turners: true, conveyors: true },
+    errorMargin: 0,
+    distToNextFlag: 1,
+    damage: 0,
+    damageThreshold: 5,
+    alive: true,
+    inputLog: 'rr131'
+};
 
 
 function checkFlag(robot, board) {
@@ -73,15 +82,11 @@ function checkFlag(robot, board) {
  }
  return robot;
 }
-
 function encounterWrench(robot, board) {
    let newBot = _.cloneDeep(robot);
    let boardPosition = board[ robot.position[1] ][ robot.position[0] ];
-   if (boardPosition.wrench === true) {
+   if (boardPosition.wrench === true && robot.damage > 0) {
      newBot.damage = newBot.damage - 1;
-     if (newBot.damage < 0) {
-       newBot.damage = 0;
-     }
    }
    return newBot;
  }
@@ -107,14 +112,14 @@ function fiveSteps(robot, cards, board) {
    for ( x = 0; x < 5; x++) {
      if (newBot.alive === true) {
        newBot = moveRobotOneStep(newBot, cards[x], board);
-       console.log(newBot.position + "  " + newBot.orientation)
+       //console.log(newBot.position + "  " + newBot.orientation)
        newBot = encounterBoard(newBot, board);
-       console.log(newBot.position + "  " + newBot.orientation + "\n")
+       //console.log(newBot.position + "  " + newBot.orientation + "\n")
      } else {
        break;
      }
    }
-   return encounterWrench(newBot, board);
+   return newBot;
  }
 function heatMap(inputArr, robot, board) {
    let output = [];
@@ -147,18 +152,17 @@ function bestMove (inputArr, robot) {
       arrRest.push(currentSimulation)
     }
   }
-  const sortedRest = _.sortBy(arrRest, ["distToNextFlag", "damage"]);
-  const sortedFlag = _.sortBy(arrFlag, ["damage"]);
-  if (robot.damage > robot.damageThreshold &&
-      arrWrench.length > 0 &&
-      Math.random() > (_.indexOf(robot.flags, false) * 0.2) + 0.2) {
-    console.log ("\n\nI need to repair myself\n\n");
-    return arrWrench[Math.floor(Math.random() * arrWrench.length)];
-  }
-  if (arrFlag.length > 0) {
+  const sortedFlag = _.sortBy(arrFlag, ["distToNextFlag", "damage"]);
+  if (sortedFlag.length > 0) {
     console.log("\n\nI'm going for the flag!\n\n");
     return sortedFlag[0];
   }
+  const sortedWrench = _.sortBy(arrWrench, ["damage", "distToNextFlag"]);
+  if (robot.damage > robot.damageThreshold && arrWrench.length > 0) {
+    console.log ("\n\nI need to repair myself\n\n");
+    return arrWrench[0];
+  }
+  const sortedRest = _.sortBy(arrRest, ["distToNextFlag", "damage"]);
   if (sortedRest.length === 0){
     console.log("\n\nCrap! I think I'm going to die!\n\n");
     return arrDead[0]
@@ -169,7 +173,5 @@ function bestMove (inputArr, robot) {
 }
 
 console.log("====================================================")
-let newPosition = (bestMove(allMovesArr, robot));
-console.log(fiveSteps(robot, newPosition.inputLog, testBoard));
-console.log ("")
 console.log(bestMove(allMovesArr, robot))
+console.log ("\n\n")
