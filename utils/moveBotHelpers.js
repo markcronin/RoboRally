@@ -25,7 +25,13 @@ function changePosition(robot, move) {
 
 // returns whether or not the robot is blocked by a wall given
 // its current position and orientation.
-function blockedByWall(robot, board){
+function blockedByWall(robot, board, move){
+  const directions = ['north', 'east', 'south', 'west'];
+  if (move === "b"){
+    let currentOrientation = directions[(_.indexOf(directions, robot.orientation) + 2) % 4];
+    let currentSquare = board[ robot.position[1] ][ robot.position[0] ];
+    return currentSquare[currentOrientation];
+  }
   let currentOrientation = robot.orientation;
   let currentSquare = board[ robot.position[1] ][ robot.position[0] ];
   return currentSquare[currentOrientation];
